@@ -1,0 +1,3 @@
+Gonza: Aquí van los servicios (Service).
+- Implementar GenericService.java (ya creado).
+- Crear EmpleadoService.java y LegajoService.java con lógica de transacciones y validaciones.

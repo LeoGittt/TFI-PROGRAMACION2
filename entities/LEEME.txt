@@ -1,0 +1,3 @@
+Leonel: Aquí van las entidades Java (Empleado y Legajo).
+- Completar los archivos .java con los atributos, constructores, getters/setters y toString.
+- Seguir la especificación del TP.

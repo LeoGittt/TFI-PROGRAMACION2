@@ -1,0 +1,3 @@
+Gonza: Aquí va el menú de consola (AppMenu.java).
+- Implementar el menú CRUD y pruebas de rollback.
+- Usar los services para operar con la base de datos.

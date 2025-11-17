@@ -36,6 +36,7 @@ public class AppMenu {
                     case 7 -> verEscrituras(escrituraService);
                     case 8 -> modificarEscritura(sc, escrituraService);
                     case 9 -> borrarEscritura(sc, escrituraService);
+                    case 10 -> asociarEscrituraAPropiedad(sc, propiedadService, escrituraService);
 
                     case 0 -> System.out.println("Saliendo...");
                     default -> System.out.println("Opción inválida, intente nuevamente.");
@@ -60,6 +61,7 @@ public class AppMenu {
         System.out.println("7. Ver escrituras notariales");
         System.out.println("8. Modificar escritura notarial");
         System.out.println("9. Borrar escritura notarial");
+        System.out.println("10. Asociar escritura a propiedad (vincular existente)");
         System.out.println("0. Salir");
     }
 
@@ -322,6 +324,33 @@ public class AppMenu {
             System.out.println("✔ Escritura eliminada.");
         } catch (Exception e) {
             System.out.println("❌ Error al borrar escritura: " + e.getMessage());
+        }
+    }
+
+    // -------- ASOCIAR ESCRITURA A PROPIEDAD --------
+
+    private static void asociarEscrituraAPropiedad(Scanner sc, PropiedadService propiedadService, EscrituraNotarialService escrituraService) {
+        try {
+            long idProp = leerLong(sc, "ID de la propiedad: ");
+            Propiedad p = propiedadService.getById(idProp);
+            if (p == null) {
+                System.out.println("⚠ No se encontró propiedad con ese ID.");
+                return;
+            }
+
+            long idEsc = leerLong(sc, "ID de la escritura a asociar: ");
+            EscrituraNotarial e = escrituraService.getById(idEsc);
+            if (e == null) {
+                System.out.println("⚠ No se encontró escritura con ese ID.");
+                return;
+            }
+
+            // Asociar y actualizar
+            p.setEscrituraNotarial(e);
+            propiedadService.actualizar(p);
+            System.out.println("✔ Escritura " + idEsc + " asociada a propiedad " + idProp + ".");
+        } catch (Exception ex) {
+            System.out.println("❌ Error al asociar escritura: " + ex.getMessage());
         }
     }
 }

@@ -204,8 +204,8 @@ Todas las entidades implementan el campo `eliminado` (BOOLEAN) para realizar baj
 ## 👥 Integrantes
 
 - **Leonel**: Entities (Propiedad, EscrituraNotarial)
-- **Fede**: DAO (GenericDao, PropiedadDao, EscrituraNotarialDao) y DatabaseConnection
-- **Gonza**: Service (GenericService, PropiedadService, EscrituraNotarialService) y AppMenu
+- **Federico**: DAO (GenericDao, PropiedadDao, EscrituraNotarialDao) y DatabaseConnection
+- **Gonzalo**: Service (GenericService, PropiedadService, EscrituraNotarialService) y AppMenu
 
 ---
 

@@ -1,10 +1,11 @@
 package service;
 
-// Gonza: Interfaz genérica para servicios
-public interface GenericService<T> {
-    void insertar(T t) throws Exception;
-    void actualizar(T t) throws Exception;
-    void eliminar(long id) throws Exception;
-    T getById(long id) throws Exception;
-    java.util.List<T> getAll() throws Exception;
+import java.util.List;
+
+public interface GenericService<T, ID> {
+    void insertar(T entity) throws Exception;
+    void actualizar(T entity) throws Exception;
+    void eliminar(ID id) throws Exception;
+    T getById(ID id) throws Exception;
+    List<T> getAll() throws Exception;
 }

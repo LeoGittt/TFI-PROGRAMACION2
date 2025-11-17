@@ -1,3 +1,16 @@
 Fede: Aquí va la configuración de la base de datos.
-- Completar db.properties con tus datos de MySQL.
-- Usar DatabaseConnection.java para obtener la conexión.
+- Completar `config/db.properties` con tus datos de MySQL.
+- Usar `DatabaseConnection.java` para obtener la conexión. La implementación intenta
+	primero cargar `config/db.properties` y, si no existe, usa system properties o
+	valores por defecto (localhost).
+
+Notas:
+- Archivo `config/db.properties` (ejemplo `config/db.properties.example`) debe contener:
+	jdbc.url=jdbc:mysql://localhost:3306/tfi_prog2
+	jdbc.user=root
+	jdbc.password=
+
+- Si prefieres no usar el archivo, puedes pasar las propiedades con:
+	-Ddb.url=... -Ddb.user=... -Ddb.password=...
+
+Mantén este archivo actualizado con instrucciones para el equipo.

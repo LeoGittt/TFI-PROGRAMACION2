@@ -12,6 +12,8 @@ public class EscrituraNotarial {
     private String tomo;
     private String folio;
     private String observaciones;
+    // Campo temporal para persistencia (FK a propiedad)
+    private Long propiedadId;
 
     // Constructor vacío
     public EscrituraNotarial() {}
@@ -45,6 +47,8 @@ public class EscrituraNotarial {
     public void setFolio(String folio) { this.folio = folio; }
     public String getObservaciones() { return observaciones; }
     public void setObservaciones(String observaciones) { this.observaciones = observaciones; }
+    public Long getPropiedadId() { return propiedadId; }
+    public void setPropiedadId(Long propiedadId) { this.propiedadId = propiedadId; }
 
     @Override
     public String toString() {

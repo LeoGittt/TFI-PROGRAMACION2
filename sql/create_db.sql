@@ -13,8 +13,7 @@ CREATE TABLE IF NOT EXISTS propiedad (
   direccion VARCHAR(150) NOT NULL,
   superficieM2 DECIMAL(10,2) NOT NULL,
   destino ENUM('RES','COM'),
-  antiguedad INT,
-  escrituraNotarial_id BIGINT -- FK a escrituraNotarial (1 a 1)
+  antiguedad INT
 ) ENGINE=InnoDB;
 
 -- Tabla escrituraNotarial (B) con FK única a propiedad.id para garantizar 1->1

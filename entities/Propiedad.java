@@ -2,7 +2,10 @@ package entities;
 
 import java.math.BigDecimal;
 
-// Leonel: Entidad principal (A) - Propiedad
+/**
+ * Entidad principal que representa una Propiedad inmobiliaria.
+ * Mantiene una relación 1→1 unidireccional con EscrituraNotarial.
+ */
 public class Propiedad {
     private Long id;
     private Boolean eliminado;

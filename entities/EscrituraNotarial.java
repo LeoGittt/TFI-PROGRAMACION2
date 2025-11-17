@@ -2,7 +2,10 @@ package entities;
 
 import java.time.LocalDate;
 
-// Leonel: Entidad secundaria (B) - EscrituraNotarial
+/**
+ * Entidad que representa una Escritura Notarial asociada a una Propiedad.
+ * Relación 1→1 unidireccional desde Propiedad.
+ */
 public class EscrituraNotarial {
     private Long id;
     private Boolean eliminado;

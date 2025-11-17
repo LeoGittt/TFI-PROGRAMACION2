@@ -1,4 +1,0 @@
-Fede: Aquí van los DAOs.
-- Implementar GenericDao.java (ya creado).
-- Crear EmpleadoDaoJDBC.java y LegajoDaoJDBC.java usando PreparedStatement.
-- Métodos deben aceptar Connection externa para transacciones.

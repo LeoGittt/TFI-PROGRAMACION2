@@ -1,0 +1,7 @@
+# Configuración de conexión a la base de datos MySQL
+# Copia este archivo a db.properties y completa con tus credenciales
+
+jdbc.url=jdbc:mysql://localhost:3306/tfi_prog2
+jdbc.user=root
+jdbc.password=TU_CONTRASEÑA_AQUI
+

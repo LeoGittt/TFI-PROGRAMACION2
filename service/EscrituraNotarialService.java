@@ -7,7 +7,9 @@ import config.DatabaseConnection;
 import java.sql.Connection;
 import java.util.List;
 
-// Gonza: Service para EscrituraNotarial con transacciones y validaciones
+/**
+ * Service para gestionar Escrituras Notariales con transacciones y validaciones de negocio.
+ */
 public class EscrituraNotarialService implements GenericService<EscrituraNotarial> {
     
     private EscrituraNotarialDao escrituraDao;

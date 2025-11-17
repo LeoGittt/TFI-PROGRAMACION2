@@ -11,7 +11,9 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
-// Gonza: Menú de consola principal
+/**
+ * Menú de consola principal para la gestión de Propiedades y Escrituras Notariales.
+ */
 public class AppMenu {
     private static Scanner scanner = new Scanner(System.in);
     private static PropiedadService propiedadService = new PropiedadService();

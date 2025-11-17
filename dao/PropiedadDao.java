@@ -6,7 +6,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-// Fede: DAO concreto para Propiedad
+/**
+ * Interfaz DAO para la entidad Propiedad.
+ * Define operaciones de acceso a datos específicas para Propiedades.
+ */
 public class PropiedadDao implements GenericDao<Propiedad> {
     
     @Override

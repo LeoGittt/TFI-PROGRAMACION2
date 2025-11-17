@@ -1,6 +1,8 @@
 package service;
 
-// Gonza: Interfaz genérica para servicios
+/**
+ * Interfaz genérica para servicios que gestionan entidades del dominio.
+ */
 public interface GenericService<T> {
     void insertar(T t) throws Exception;
     void actualizar(T t) throws Exception;

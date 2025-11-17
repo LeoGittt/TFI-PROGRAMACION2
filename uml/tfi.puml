@@ -1,0 +1,90 @@
+@startuml
+title Diagrama de clases - Propiedad → EscrituraNotarial (1→1)
+
+package entities {
+  class Propiedad {
+    - Long id
+    - Boolean eliminado
+    - String padronCatastral
+    - String direccion
+    - BigDecimal superficieM2
+    - Destino destino
+    - Integer antiguedad
+    - EscrituraNotarial escrituraNotarial
+    + Propiedad()
+    + Propiedad(Long, Boolean, String, String, BigDecimal, Destino, Integer, EscrituraNotarial)
+    + getters/setters
+    + toString()
+  }
+
+  class EscrituraNotarial {
+    - Long id
+    - Boolean eliminado
+    - String nroEscritura
+    - LocalDate fecha
+    - String notaria
+    - String tomo
+    - String folio
+    - String observaciones
+    + EscrituraNotarial()
+    + EscrituraNotarial(...)
+    + getters/setters
+    + toString()
+  }
+
+  class Empleado {
+    - Long id
+    - Boolean eliminado
+    - String nombre
+    - String apellido
+    - String dni
+    - String email
+    - LocalDate fechaIngreso
+    - String area
+    - Legajo legajo
+  }
+
+  class Legajo {
+    - Long id
+    - Boolean eliminado
+    - String nroLegajo
+    - String categoria
+    - Estado estado
+    - LocalDate fechaAlta
+    - String observaciones
+  }
+
+  enum Destino { RES, COM }
+  enum Estado { ACTIVO, INACTIVO }
+}
+
+' Relación 1->1 unidireccional desde Propiedad a EscrituraNotarial
+Propiedad "1" --> "0..1" EscrituraNotarial : escrituraNotarial
+
+' Empleado -> Legajo (ejemplo alternativo 1->1)
+Empleado "1" --> "0..1" Legajo : legajo
+
+note left of Propiedad
+  La relación 1→1 está garantizada en la BD mediante
+  la columna propiedad.escritura_id con UNIQUE constraint
+end note
+
+package dao {
+  interface GenericDao<T>
+  class PropiedadDaoJdbc
+  class EscrituraNotarialDaoJdbc
+}
+
+package service {
+  interface GenericService<T,ID>
+  class PropiedadService
+  class EscrituraNotarialService
+}
+
+Propiedad ..> PropiedadDaoJdbc
+EscrituraNotarial ..> EscrituraNotarialDaoJdbc
+PropiedadService ..> PropiedadDaoJdbc
+PropiedadService ..> EscrituraNotarialDaoJdbc
+EscrituraNotarialService ..> EscrituraNotarialDaoJdbc
+
+@enduml

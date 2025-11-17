@@ -1,3 +1,0 @@
-Fede: Aquí va la configuración de la base de datos.
-- Completar db.properties con tus datos de MySQL.
-- Usar DatabaseConnection.java para obtener la conexión.

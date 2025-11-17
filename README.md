@@ -1,131 +1,63 @@
 # TFI - Programación 2
-## Aplicación Java con relación 1→1 unidireccional + DAO + MySQL
 
-### Descripción del Dominio
+## Sistema de Gestión de Propiedades y Escrituras Notariales
 
-Este proyecto implementa un sistema de gestión de **Propiedades** y sus **Escrituras Notariales** asociadas, modelando una relación unidireccional 1→1 donde:
-- **Propiedad (A)**: Representa una propiedad inmobiliaria con información catastral, dirección, superficie, destino y antigüedad.
-- **EscrituraNotarial (B)**: Representa la escritura notarial asociada a una propiedad, conteniendo número de escritura, fecha, notaría, tomo, folio y observaciones.
-
-La relación es **unidireccional**: solo `Propiedad` contiene una referencia a `EscrituraNotarial`, garantizando que cada propiedad puede tener como máximo una escritura asociada (1→1).
+Aplicación Java que implementa un sistema de gestión de **Propiedades** y sus **Escrituras Notariales** asociadas, modelando una relación unidireccional 1→1 donde cada propiedad puede tener como máximo una escritura asociada.
 
 ---
 
-## Requisitos
+## 📋 Requisitos
 
 ### Software Necesario
-- **Java**: Versión 21 (recomendado) o superior
+- **Java JDK**: Versión 17 o superior (recomendado 21)
 - **MySQL**: Versión 8.0 o superior
-- **MySQL Connector/J**: Driver JDBC para MySQL (incluido como dependencia)
-- **IDE**: Cualquier IDE compatible con Java (IntelliJ IDEA, Eclipse, VS Code, etc.)
-
-### Dependencias
-El proyecto requiere el driver JDBC de MySQL. Si usas Maven, agrega a tu `pom.xml`:
-```xml
-<dependency>
-    <groupId>com.mysql</groupId>
-    <artifactId>mysql-connector-j</artifactId>
-    <version>8.0.33</version>
-</dependency>
-```
-
-O descarga el JAR desde: https://dev.mysql.com/downloads/connector/j/
+- **MySQL Connector/J**: Driver JDBC incluido en `lib/` (versión 9.5.0)
 
 ---
 
-## Configuración de la Base de Datos
+## 🚀 Instalación Rápida
 
-### 1. Crear el archivo de propiedades
+### 1. Configurar Base de Datos
 
-Copia el archivo de ejemplo y completa con tus credenciales:
+1. **Crear archivo de configuración:**
+   - Copiar `config/db.properties.example` a `config/db.properties`
+   - Editar `config/db.properties` con tus credenciales:
+   ```properties
+   jdbc.url=jdbc:mysql://localhost:3306/tfi_prog2
+   jdbc.user=root
+   jdbc.password=TU_CONTRASEÑA
+   ```
+
+2. **Crear la base de datos:**
+   - Ejecutar `crear_bd.bat` (Windows)
+   - O manualmente: `mysql -u root -p < sql\create_db.sql`
+
+3. **Cargar datos de prueba (opcional):**
+   ```sql
+   mysql -u root -p < sql\seed_data.sql
+   ```
+
+### 2. Compilar y Ejecutar
+
+**Opción A: Usando scripts batch (Windows)**
 ```bash
-cp config/db.properties.example config/db.properties
+# Compilar
+compilar.bat
+
+# Ejecutar
+ejecutar.bat
 ```
 
-Edita `config/db.properties`:
-```properties
-jdbc.url=jdbc:mysql://localhost:3306/tfi_prog2
-jdbc.user=root
-jdbc.password=tu_password
-```
-
-### 2. Crear la base de datos y tablas
-
-Ejecuta el script SQL de creación:
+**Opción B: Manualmente**
 ```bash
-mysql -u root -p < sql/create_db.sql
+# Compilar
+javac -cp ".;lib\mysql-connector-j-9.5.0.jar" config\*.java entities\*.java dao\*.java service\*.java main\*.java
+
+# Ejecutar
+java -cp ".;lib\mysql-connector-j-9.5.0.jar" main.AppMenu
 ```
 
-O desde MySQL Workbench/consola:
-```sql
-SOURCE sql/create_db.sql;
-```
-
-### 3. Cargar datos de prueba (opcional)
-
-```bash
-mysql -u root -p < sql/seed_data.sql
-```
-
-O desde MySQL:
-```sql
-SOURCE sql/seed_data.sql;
-```
-
----
-
-## Estructura del Proyecto
-
-```
-TFI-PROGRAMACION2/
-├── config/
-│   ├── DatabaseConnection.java      # Conexión a la BD
-│   ├── db.properties.example        # Ejemplo de configuración
-│   └── db.properties                # Configuración real (crear manualmente)
-├── entities/
-│   ├── Propiedad.java               # Entidad A (principal)
-│   └── EscrituraNotarial.java       # Entidad B (secundaria)
-├── dao/
-│   ├── GenericDao.java               # Interfaz genérica DAO
-│   ├── PropiedadDao.java             # DAO concreto para Propiedad
-│   └── EscrituraNotarialDao.java    # DAO concreto para EscrituraNotarial
-├── service/
-│   ├── GenericService.java           # Interfaz genérica Service
-│   ├── PropiedadService.java         # Service con transacciones para Propiedad
-│   └── EscrituraNotarialService.java # Service con transacciones para EscrituraNotarial
-├── main/
-│   └── AppMenu.java                  # Menú de consola principal
-└── sql/
-    ├── create_db.sql                 # Script de creación de BD
-    └── seed_data.sql                 # Datos de prueba
-```
-
----
-
-## Compilación y Ejecución
-
-### Compilación Manual
-
-```bash
-# Compilar todas las clases
-javac -cp ".:mysql-connector-j-8.0.33.jar" config/*.java entities/*.java dao/*.java service/*.java main/*.java
-
-# O si tienes las clases en un directorio específico:
-javac -cp ".:mysql-connector-j-8.0.33.jar" -d bin config/*.java entities/*.java dao/*.java service/*.java main/*.java
-```
-
-### Ejecución
-
-```bash
-# Ejecutar la aplicación
-java -cp ".:mysql-connector-j-8.0.33.jar" main.AppMenu
-
-# O si compilaste a un directorio:
-java -cp ".:mysql-connector-j-8.0.33.jar:bin" main.AppMenu
-```
-
-### Con Maven
-
+**Opción C: Con Maven**
 ```bash
 # Compilar
 mvn compile
@@ -136,19 +68,46 @@ mvn exec:java -Dexec.mainClass="main.AppMenu"
 
 ---
 
-## Uso de la Aplicación
+## 📁 Estructura del Proyecto
 
-Al ejecutar `AppMenu`, se mostrará un menú interactivo con las siguientes opciones:
+```
+TFI-PROGRAMACION2/
+├── config/
+│   ├── DatabaseConnection.java      # Gestión de conexión a BD
+│   └── db.properties                 # Configuración (crear desde .example)
+├── entities/
+│   ├── Propiedad.java                # Entidad principal (A)
+│   └── EscrituraNotarial.java        # Entidad secundaria (B)
+├── dao/
+│   ├── GenericDao.java               # Interfaz genérica DAO
+│   ├── PropiedadDao.java             # Interfaz DAO Propiedad
+│   ├── PropiedadDaoJdbc.java         # Implementación JDBC
+│   ├── EscrituraNotarialDao.java     # Interfaz DAO Escritura
+│   └── EscrituraNotarialDaoJdbc.java # Implementación JDBC
+├── service/
+│   ├── GenericService.java           # Interfaz genérica Service
+│   ├── PropiedadService.java         # Lógica de negocio Propiedad
+│   └── EscrituraNotarialService.java # Lógica de negocio Escritura
+├── main/
+│   └── AppMenu.java                  # Menú de consola principal
+├── sql/
+│   ├── create_db.sql                 # Script creación BD y tablas
+│   └── seed_data.sql                 # Datos de prueba
+└── lib/
+    └── mysql-connector-j-9.5.0.jar   # Driver JDBC MySQL
+```
+
+---
+
+## 🎯 Funcionalidades
 
 ### Menú Principal
-1. **Gestión de Propiedades**: CRUD completo de propiedades
-2. **Gestión de Escrituras Notariales**: CRUD completo de escrituras
-3. **Búsquedas**: Búsqueda por padrón catastral y número de escritura
+1. **Gestión de Propiedades**: CRUD completo
+2. **Gestión de Escrituras Notariales**: CRUD completo
+3. **Búsquedas**: Por padrón catastral y número de escritura
 0. **Salir**
 
-### Funcionalidades
-
-#### Propiedades
+### Propiedades
 - ✅ Crear propiedad (con opción de crear escritura asociada)
 - ✅ Listar todas las propiedades
 - ✅ Buscar por ID
@@ -156,7 +115,7 @@ Al ejecutar `AppMenu`, se mostrará un menú interactivo con las siguientes opci
 - ✅ Actualizar propiedad
 - ✅ Eliminar lógicamente (baja lógica)
 
-#### Escrituras Notariales
+### Escrituras Notariales
 - ✅ Crear escritura (asociada a una propiedad)
 - ✅ Listar todas las escrituras
 - ✅ Buscar por ID
@@ -164,33 +123,33 @@ Al ejecutar `AppMenu`, se mostrará un menú interactivo con las siguientes opci
 - ✅ Actualizar escritura
 - ✅ Eliminar lógicamente (baja lógica)
 
-### Validaciones Implementadas
+---
 
-- **Propiedad**:
-  - Padrón catastral obligatorio y único
-  - Dirección obligatoria
-  - Superficie en m² obligatoria y mayor a cero
-  - Antigüedad no negativa
-  - Regla 1→1: no permite más de una escritura por propiedad
+## 🔒 Validaciones Implementadas
 
-- **EscrituraNotarial**:
-  - Fecha obligatoria
-  - Número de escritura único (si se proporciona)
-  - Regla 1→1: no permite crear otra escritura para una propiedad que ya tiene una
+### Propiedad
+- Padrón catastral obligatorio y único
+- Dirección obligatoria
+- Superficie en m² obligatoria y mayor a cero
+- Antigüedad no negativa
+- **Regla 1→1**: No permite más de una escritura por propiedad
+
+### EscrituraNotarial
+- Fecha obligatoria
+- Número de escritura único (si se proporciona)
+- **Regla 1→1**: No permite crear otra escritura para una propiedad que ya tiene una
 
 ---
 
-## Características Técnicas
+## 🏗️ Arquitectura
 
-### Arquitectura por Capas
-
+### Capas
 1. **Entities**: Modelo de dominio con relación 1→1 unidireccional
 2. **DAO**: Acceso a datos con JDBC y PreparedStatement
 3. **Service**: Lógica de negocio y orquestación de transacciones
 4. **Main**: Interfaz de usuario (consola)
 
 ### Transacciones
-
 Los Services implementan transacciones completas:
 - `setAutoCommit(false)` al inicio
 - `commit()` si todas las operaciones son exitosas
@@ -198,77 +157,58 @@ Los Services implementan transacciones completas:
 - Restablecimiento de `autoCommit(true)` y cierre de recursos
 
 ### Baja Lógica
-
 Todas las entidades implementan el campo `eliminado` (BOOLEAN) para realizar bajas lógicas en lugar de eliminaciones físicas.
 
 ### Relación 1→1 en Base de Datos
-
-La relación se implementa mediante:
 - Clave foránea única (`propiedad_id`) en la tabla `escrituraNotarial`
 - Constraint `UNIQUE` en `propiedad_id` para garantizar la unicidad
 - `ON DELETE CASCADE` para mantener integridad referencial
 
 ---
 
-## Datos de Prueba
+## 🛠️ Solución de Problemas
 
-El script `seed_data.sql` incluye 3 propiedades de ejemplo con sus escrituras asociadas:
+### Error: "java no se reconoce como comando"
+- **Solución**: Java no está en el PATH
+  - Agregar la ruta de Java al PATH (ej: `C:\Program Files\Java\jdk-21\bin`)
 
-1. **Propiedad COM**: Av. Corrientes 1234 (150.50 m²)
-2. **Propiedad RES**: Calle San Martín 567 (85.25 m²)
-3. **Propiedad RES**: Av. Libertador 890 (200.00 m²)
+### Error: "mysql no se reconoce como comando"
+- **Solución**: MySQL no está en el PATH
+  - Agregar: `C:\Program Files\MySQL\MySQL Server 8.0\bin`
+  - O usar la ruta completa en los comandos
 
----
+### Error: "Access denied for user 'root'@'localhost'"
+- **Solución**: Contraseña incorrecta en `db.properties`
+  - Verificar que la contraseña en `config/db.properties` sea correcta
 
-## Credenciales de Prueba
+### Error: "Unknown database 'tfi_prog2'"
+- **Solución**: La base de datos no existe
+  - Ejecutar: `mysql -u root -p < sql\create_db.sql`
 
-Para usar los datos de prueba, asegúrate de que tu `db.properties` tenga:
-- Usuario: `root` (o el usuario que uses)
-- Password: Tu contraseña de MySQL
-- Base de datos: `tfi_prog2`
-
----
-
-## Video Demostrativo
-
-[Enlace al video de demostración - agregar cuando esté disponible]
-
-El video incluye:
-- Presentación de los integrantes
-- Demostración del flujo CRUD completo
-- Explicación de la relación 1→1 funcionando
-- Demostración de transacciones y rollback ante errores
+### Error: "ClassNotFoundException: com.mysql.cj.jdbc.Driver"
+- **Solución**: El JAR no está en el classpath
+  - Verificar que `lib/mysql-connector-j-9.5.0.jar` exista
+  - Verificar la ruta del JAR en los comandos de compilación/ejecución
 
 ---
 
-## Integrantes
+## 📝 Características Técnicas
+
+- **PreparedStatement**: Todas las consultas usan PreparedStatement para prevenir SQL injection
+- **DAOs con Connection externa**: Los DAOs aceptan `Connection` externa para participar en transacciones
+- **Manejo robusto de errores**: Mensajes claros al usuario
+- **Validaciones de negocio**: Implementadas en la capa Service
+
+---
+
+## 👥 Integrantes
 
 - **Leonel**: Entities (Propiedad, EscrituraNotarial)
 - **Fede**: DAO (GenericDao, PropiedadDao, EscrituraNotarialDao) y DatabaseConnection
 - **Gonza**: Service (GenericService, PropiedadService, EscrituraNotarialService) y AppMenu
-- **[Cuarto integrante]**: [Rol asignado]
 
 ---
 
-## Notas Adicionales
-
-- El proyecto usa `PreparedStatement` en todas las consultas para prevenir SQL injection
-- Los DAOs aceptan `Connection` externa para participar en transacciones
-- El menú convierte entradas a mayúsculas donde corresponde (padrón catastral, destino, etc.)
-- Manejo robusto de errores con mensajes claros al usuario
-
----
-
-## Mejoras Futuras
-
-- Implementar búsqueda avanzada con múltiples criterios
-- Exportar reportes a PDF/Excel
-- Interfaz gráfica (Swing/JavaFX)
-- Autenticación de usuarios
-- Logging con Log4j o similar
-
----
-
-## Licencia
+## 📄 Licencia
 
 Este proyecto es parte del Trabajo Final Integrador de la materia Programación 2.

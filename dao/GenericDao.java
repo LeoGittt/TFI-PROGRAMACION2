@@ -2,7 +2,10 @@ package dao;
 
 import java.sql.Connection;
 
-// Fede: Interfaz genérica para DAOs
+/**
+ * Interfaz genérica para Data Access Objects (DAOs).
+ * Define operaciones CRUD estándar con soporte para transacciones.
+ */
 public interface GenericDao<T> {
     // Métodos estándar (usan conexión propia)
     void crear(T t) throws Exception;

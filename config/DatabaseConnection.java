@@ -5,11 +5,13 @@ import java.sql.DriverManager;
 import java.util.Properties;
 import java.io.FileInputStream;
 
-// Fede: Clase para obtener la conexión a la base de datos
+/**
+ * Clase para gestionar la conexión a la base de datos MySQL.
+ * Lee las credenciales desde el archivo config/db.properties.
+ */
 public class DatabaseConnection {
     public static Connection getConnection() throws Exception {
         Properties props = new Properties();
-        // TODO: Cambiar la ruta si es necesario
         FileInputStream fis = new FileInputStream("config/db.properties");
         props.load(fis);
         String url = props.getProperty("jdbc.url");

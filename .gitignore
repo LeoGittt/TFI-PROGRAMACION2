@@ -1,0 +1,24 @@
+# Build / generated
+out/
+target/
+bin/
+**/*.class
+*.jar
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Local libs
+lib/*.jar
+
+# Config local
+config/db.properties
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log

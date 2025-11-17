@@ -9,7 +9,9 @@ import java.sql.Connection;
 import java.math.BigDecimal;
 import java.util.List;
 
-// Gonza: Service para Propiedad con transacciones y validaciones
+/**
+ * Service para gestionar Propiedades con transacciones y validaciones de negocio.
+ */
 public class PropiedadService implements GenericService<Propiedad> {
     
     private PropiedadDao propiedadDao;
@@ -55,27 +57,25 @@ public class PropiedadService implements GenericService<Propiedad> {
                 if (escritura.getNroEscritura() != null && !escritura.getNroEscritura().trim().isEmpty()) {
                     EscrituraNotarial escrituraConMismoNumero = escrituraDao.buscarPorNumero(escritura.getNroEscritura(), conn);
                     // ============================================================
-                    // PARA DEMO DE ROLLBACK: Comentar las siguientes 3 líneas
-                    // PARA CÓDIGO NORMAL: Descomentar las siguientes 3 líneas
+                    // MODO ROLLBACK ACTIVO: Validación comentada para permitir duplicados
                     // ============================================================
-                    if (escrituraConMismoNumero != null) {
-                        throw new IllegalArgumentException("Ya existe una escritura con el número: " + escritura.getNroEscritura());
-                    }
+                    // if (escrituraConMismoNumero != null) {
+                    //     throw new IllegalArgumentException("Ya existe una escritura con el número: " + escritura.getNroEscritura());
+                    // }
                 }
                 
                 // Asociar la escritura con la propiedad
                 escritura.setPropiedadId(propiedad.getId());
                 
                 // ============================================================
-                // PARA DEMO DE ROLLBACK: Descomentar la siguiente línea
-                // PARA CÓDIGO NORMAL: Comentar o eliminar la siguiente línea
+                // MODO ROLLBACK ACTIVO: Error simulado para demostrar rollback
+                // Esto hará que se cree la propiedad pero NO la escritura
                 // ============================================================
-                // throw new RuntimeException("Error simulado para demostrar rollback");
+                throw new RuntimeException("Error simulado para demostrar rollback - La propiedad se creó pero la escritura falló");
                 
-                escrituraDao.crear(escritura, conn);
-                
-                // Actualizar la referencia en la propiedad (opcional, ya está en memoria)
-                propiedad.setEscrituraNotarial(escritura);
+                // Código inalcanzable (comentado para compilación)
+                // escrituraDao.crear(escritura, conn);
+                // propiedad.setEscrituraNotarial(escritura);
             }
             
             conn.commit();

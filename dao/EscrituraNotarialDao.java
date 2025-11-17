@@ -7,7 +7,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-// Fede: DAO concreto para EscrituraNotarial
+/**
+ * Interfaz DAO para la entidad EscrituraNotarial.
+ * Define operaciones de acceso a datos específicas para Escrituras Notariales.
+ */
 public class EscrituraNotarialDao implements GenericDao<EscrituraNotarial> {
     
     @Override
